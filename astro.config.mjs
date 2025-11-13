@@ -6,9 +6,12 @@ import swup from "@swup/astro";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
+// Use base path only for GitHub Pages, not for Vercel
+const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
+
 export default defineConfig({
-  site: "https://djsiddz.github.io",
-  base: "/space-ahead",
+  site: isGitHubPages ? "https://djsiddz.github.io" : "https://blog-1-1wb5ogwiu-bipul-kumars-projects.vercel.app",
+  base: isGitHubPages ? "/space-ahead" : undefined,
   integrations: [
     swup({
       theme: ["overlay", { direction: "to-top" }],
