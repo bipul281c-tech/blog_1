@@ -15,6 +15,7 @@ const config = getCurrentDeployment();
 export default defineConfig({
   site: config.url,
   base: config.base,
+  output: 'static', // Explicitly set output mode for Vercel
   integrations: [
     swup({
       theme: ["overlay", { direction: "to-top" }],

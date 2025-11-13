@@ -5,6 +5,7 @@ import {
   sortItemsByDateDesc,
   createSlugFromTitle,
   withBase,
+  getPostSlug,
 } from "../../utils/helpers";
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import Button from "../../components/Button.astro";
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
   const posts = (await getCollection("blogs")).sort(sortItemsByDateDesc);
   const postCount = posts.length;
   return posts.map((post, index) => ({
-    params: { id: post.id },
+    params: { id: getPostSlug(post) }, // Use slug instead of file ID
     props: {
       post,
       prevPost: index + 1 !== postCount ? posts[index + 1] : null,
@@ -88,7 +89,7 @@ const { Content } = await render(post);
         (prevPost || nextPost) && nextPost && (
           <Button
             class="back-link text-balance"
-            href={withBase("/blog/" + nextPost.id)}
+            href={withBase("/blog/" + getPostSlug(nextPost))}
           >
             Next Post: {nextPost.data.title}{" "}
             <ArrowRight class="w-5 h-5 fill-current ml-4" />

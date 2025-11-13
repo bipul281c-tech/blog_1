@@ -1,11 +1,20 @@
 /**
- * 🔧 DEPLOYMENT CONFIGURATION
- * 
- * This file contains all deployment URLs and base paths.
- * Update these values when you change domains or deployment platforms.
- * 
- * This configuration is separate from site.config.ts to avoid circular dependencies
- * during the build process.
+ * 🚀 FULLY DYNAMIC DEPLOYMENT CONFIGURATION
+ *
+ * ✨ NO HARDCODED URLs - Everything is automatic!
+ *
+ * This configuration automatically detects:
+ * - Local development: http://localhost:4321
+ * - Vercel deployment: Uses VERCEL_URL (automatic)
+ * - Custom domain: Set SITE_URL in Vercel dashboard
+ * - GitHub Pages: Detects GITHUB_ACTIONS environment
+ *
+ * You DON'T need to update this file when:
+ * - Deploying to Vercel
+ * - Changing domains
+ * - Running locally
+ *
+ * See DYNAMIC-DEPLOYMENT-GUIDE.md for details.
  */
 
 export type DeploymentConfig = {
@@ -19,22 +28,28 @@ export type DeploymentConfig = {
     };
 };
 
-// 🔧 UPDATE THESE VALUES WHEN CHANGING DOMAINS
+// 🔧 FULLY DYNAMIC - No hardcoded URLs!
+// Uses environment variables that are automatically set by hosting platforms
 export const deploymentConfig: DeploymentConfig = {
-    // Your primary production deployment (Vercel, Netlify, custom domain, etc.)
+    // Production deployment (Vercel, Netlify, custom domain, etc.)
     production: {
-        url: 'https://blog-1-1wb5ogwiu-bipul-kumars-projects.vercel.app', // 👈 UPDATE THIS with your domain
-        base: '/' // Usually '/' for root domain deployments
+        // Vercel automatically provides VERCEL_URL
+        // For custom domains, set SITE_URL in Vercel dashboard
+        url: process.env.SITE_URL ||
+             (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:4321'),
+        base: process.env.BASE_PATH || '/'
     },
-    // GitHub Pages configuration (if you use it)
+    // GitHub Pages configuration
     github: {
-        url: 'https://djsiddz.github.io',
-        base: '/space-ahead' // The repository name for GitHub Pages
+        url: process.env.SITE_URL || 'https://djsiddz.github.io',
+        base: process.env.BASE_PATH || '/space-ahead'
     }
 };
 
 /**
  * Get the current deployment configuration based on environment
+ * Automatically detects GitHub Actions, otherwise uses production config
+ * All values come from environment variables - nothing hardcoded!
  */
 export function getCurrentDeployment() {
     const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';

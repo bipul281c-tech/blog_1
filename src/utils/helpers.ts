@@ -32,6 +32,14 @@ export function getPostsByTag(posts: CollectionEntry<'blogs'>[], tagId: string) 
     return filteredPosts;
 }
 
+/**
+ * Get the slug for a blog post
+ * Uses custom slug if provided, otherwise generates from title
+ */
+export function getPostSlug(post: CollectionEntry<'blogs'>): string {
+    return post.data.slug || createSlugFromTitle(post.data.title);
+}
+
 export const withBase = (path: string) => {
     const base = import.meta.env.BASE_URL;
     // If base is root '/', just return the path as-is

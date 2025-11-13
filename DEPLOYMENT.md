@@ -109,7 +109,7 @@ When you change the deployment config, these are automatically updated:
 
 **Problem**: Links are broken after deployment
 
-**Solution**: Make sure you've updated `src/site.config.ts` and redeployed
+**Solution**: Make sure you've updated `deployment.config.ts` and redeployed
 
 **Problem**: CSS not loading
 
