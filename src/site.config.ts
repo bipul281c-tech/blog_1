@@ -1,4 +1,5 @@
 import { withBase } from "./utils/helpers";
+import { deploymentConfig } from "../deployment.config";
 
 export type Image = {
     src: string;
@@ -48,17 +49,6 @@ export type Subscribe = {
     formUrl: string;
 };
 
-export type DeploymentConfig = {
-    production: {
-        url: string;
-        base: string;
-    };
-    github: {
-        url: string;
-        base: string;
-    };
-};
-
 export type SiteConfig = {
     website: string;
     logo?: Image;
@@ -76,21 +66,6 @@ export type SiteConfig = {
     postsPerPage?: number;
     recentPostLimit: number;
     projectsPerPage?: number;
-};
-
-// 🔧 DEPLOYMENT CONFIGURATION
-// Update these URLs when you change domains or deployment platforms
-export const deploymentConfig: DeploymentConfig = {
-    // Your primary production deployment (Vercel, Netlify, custom domain, etc.)
-    production: {
-        url: 'https://blog-1-1wb5ogwiu-bipul-kumars-projects.vercel.app', // 👈 UPDATE THIS with your domain
-        base: '/' // Usually '/' for root domain deployments
-    },
-    // GitHub Pages configuration (if you use it)
-    github: {
-        url: 'https://djsiddz.github.io',
-        base: '/space-ahead' // The repository name for GitHub Pages
-    }
 };
 
 const siteConfig: SiteConfig = {
