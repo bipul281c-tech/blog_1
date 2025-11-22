@@ -43,44 +43,46 @@ const { Content } = await render(post);
   seo={{
     title: title,
     description: post.data.description,
-    image: typeof image?.url === 'string' ? image.url : undefined,
+    image: typeof image?.url === "string" ? image.url : undefined,
     imageAlt: image?.alt,
     article: {
       publishedTime: pubDate,
       author: author,
       tags: tags,
-    }
+    },
   }}
 >
   <div class="page-content">
-    <h1 class="sigmar-ff text-center text-balance">{title}</h1>
-    <p class="leading-8 text-center kanit-regular text-balance text-xs">
+    <h1 class="sigmar-ff text-center text-balance px-4">{title}</h1>
+    <p
+      class="leading-6 sm:leading-8 text-center kanit-regular text-balance text-xs sm:text-sm px-4"
+    >
       by 🧑‍🚀 <span class="kanit-bold">{author}</span> on <span class="kanit-bold"
         >{new Date(pubDate).toDateString()}</span
       >
     </p>
     {
-      image && image.url && (
-        typeof image.url === 'string' ? (
+      image &&
+        image.url &&
+        (typeof image.url === "string" ? (
           <Image
-            class="mb-8 my-6"
+            class="mb-6 sm:mb-8 my-4 sm:my-6 px-4"
             src={image.url}
             alt={image.alt || ""}
             inferSize={true}
           />
         ) : (
           <Image
-            class="mb-8 my-6"
+            class="mb-6 sm:mb-8 my-4 sm:my-6 px-4"
             src={image.url}
             alt={image.alt || ""}
           />
-        )
-      )
+        ))
     }
-    <div class="font-light text-left">
+    <div class="font-light text-left px-4">
       <Content />
     </div>
-    <p class="kanit-regular text-center text-balance text-xs">
+    <p class="kanit-regular text-center text-balance text-xs sm:text-sm px-4">
       Tagged: {
         tags.map((tag) => (
           <Button
@@ -93,15 +95,15 @@ const { Content } = await render(post);
       }
     </p>
     <div
-      class="flex flex-col sm:flex-row items-center justify-center gap-4 my-8"
+      class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 my-6 sm:my-8 px-4"
     >
-      <Button class="back-link" href={withBase("/blog")}>
+      <Button class="back-link w-full sm:w-auto" href={withBase("/blog")}>
         <ArrowLeft class="w-5 h-5 fill-current mr-4" /> Back to All Stories
       </Button>
       {
         (prevPost || nextPost) && nextPost && (
           <Button
-            class="back-link text-balance"
+            class="back-link text-balance w-full sm:w-auto"
             href={withBase("/blog/" + getPostSlug(nextPost))}
           >
             Next Post: {nextPost.data.title}{" "}

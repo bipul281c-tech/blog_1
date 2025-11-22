@@ -25,19 +25,21 @@ const allPosts = page.data;
     description: siteConfig.blog?.description,
   }}
 >
-  <div class="page-content py-8 text-center">
+  <div class="page-content py-6 sm:py-8 text-center">
     <h1 class="sigmar-ff">Blog</h1>
     {
       siteConfig.blog?.description && (
-        <p class="font-light text-balance">{siteConfig.blog?.description}</p>
+        <p class="font-light text-balance px-4">
+          {siteConfig.blog?.description}
+        </p>
       )
     }
 
     <div
-      class="flex flex-col text-left gap-8 mb-4 text-sm sm:text-base max-w-fit mx-auto"
+      class="flex flex-col text-left gap-6 sm:gap-8 mb-4 text-sm sm:text-base max-w-fit mx-auto px-4"
     >
       {allPosts.map((post) => <PostCardPreview post={post} />)}
     </div>
-    <Pagination page={page} class="mb-16 sm:mb-24" />
+    <Pagination page={page} class="mb-12 sm:mb-16 sm:mb-24" />
   </div>
 </MainLayout>
