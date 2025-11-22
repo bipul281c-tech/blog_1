@@ -8,6 +8,14 @@
 
 /* 0. color variables & fonts */
 :root {
+  /* New Color Palette: Meditation Girly */
+  --soft-rose: #f0e592;
+  --lavender-mist: #bcc963;
+  --soft-charcoal: #2d694d;
+  --calm-sage: #658d57;
+  --warm-sand: #f2e694;
+
+  /* Legacy color variables (kept for backward compatibility) */
   --space-red: #90393a;
   --space-yellow: #ffff85;
   --space-sand: #e2d1c3;
@@ -20,6 +28,22 @@
 
 @theme {
   --font-sans: "Kanit", "sans-serif";
+
+  /* New Color Palette for Tailwind */
+  --color-soft-rose: var(--soft-rose);
+  --color-lavender-mist: var(--lavender-mist);
+  --color-soft-charcoal: var(--soft-charcoal);
+  --color-calm-sage: var(--calm-sage);
+  --color-warm-sand: var(--warm-sand);
+
+  /* Mapping old names to new colors to avoid breaking existing classes immediately */
+  --color-peach: var(--soft-rose);
+  --color-coral-pink: var(--lavender-mist);
+  --color-jet: var(--soft-charcoal);
+  --color-sage: var(--calm-sage);
+  --color-ash-gray: var(--warm-sand);
+
+  /* Legacy colors (kept for backward compatibility) */
   --color-space-red: var(--space-red);
   --color-space-yellow: var(--space-yellow);
   --color-space-sand: var(--space-sand);
@@ -35,18 +59,13 @@ body {
 }
 
 html.dark body {
-  background-image: linear-gradient(
-    to bottom,
-    var(--color-space-stone) 0%,
-    black 100%
-  );
-  @apply bg-black bg-cover bg-no-repeat text-whitesmoke;
+  background-color: var(--color-jet);
+  @apply text-whitesmoke;
 }
 
 html.light body {
-  /* background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
-  background-image: linear-gradient(180deg, #fdfcfb 0%, #e2d1c3 100%);
-  @apply bg-space-sand bg-cover bg-no-repeat text-black;
+  background-color: #f5f5f0;
+  color: var(--color-jet);
 }
 
 /* semantic elements */
@@ -54,13 +73,15 @@ header {
   @apply sticky top-4 z-20 mr-auto ml-auto flex w-full max-w-3xl flex-col items-center justify-center px-0 py-0 text-base;
 }
 
-header > nav {
+header>nav {
   @apply flex flex-row items-center justify-between gap-2 rounded-4xl px-5 py-2 text-xs backdrop-blur-3xl sm:gap-8 sm:py-3 sm:text-base;
   /* inner glow 👇 */
   box-shadow:
     inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
-    /* shadow ring 👇 */ 0 0 0 1px hsla(0, 0%, 0%, 0.05),
-    /* multiple soft shadows 👇 */ 0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+    /* shadow ring 👇 */
+    0 0 0 1px hsla(0, 0%, 0%, 0.05),
+    /* multiple soft shadows 👇 */
+    0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
     0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
     0 3.5px 6px hsla(0, 0%, 0%, 0.09);
 }
@@ -92,15 +113,74 @@ img {
 /* links */
 a.button-link:not(:disabled),
 button.button-link:not(:disabled) {
-  @apply inline-flex cursor-pointer items-center justify-center rounded-full border px-6 py-2 leading-tight transition hover:border-space-red hover:text-space-red sm:px-8 hover:dark:border-space-yellow hover:dark:text-space-yellow;
+  @apply inline-flex cursor-pointer items-center justify-center rounded-full border px-6 py-2 leading-tight transition sm:px-8;
+  border-color: var(--color-ash-gray);
 }
+
+a.button-link:not(:disabled):hover,
+button.button-link:not(:disabled):hover {
+  border-color: var(--color-coral-pink);
+  color: var(--color-coral-pink);
+}
+
+html.dark a.button-link:not(:disabled):hover,
+html.dark button.button-link:not(:disabled):hover {
+  border-color: var(--color-peach);
+  color: var(--color-peach);
+}
+
 a.button-link.space-btn-filled:not(:disabled),
 button.button-link.space-btn-filled:not(:disabled) {
-  @apply bg-black text-whitesmoke hover:border-space-red hover:bg-space-red dark:bg-whitesmoke dark:text-black dark:hover:border-space-yellow dark:hover:bg-space-yellow;
+  background-color: var(--color-jet);
+  color: whitesmoke;
+  border-color: var(--color-jet);
 }
+
+a.button-link.space-btn-filled:not(:disabled):hover,
+button.button-link.space-btn-filled:not(:disabled):hover {
+  background-color: var(--color-coral-pink);
+  border-color: var(--color-coral-pink);
+  color: white;
+}
+
+html.dark a.button-link.space-btn-filled:not(:disabled),
+html.dark button.button-link.space-btn-filled:not(:disabled) {
+  background-color: var(--color-sage);
+  color: var(--color-jet);
+  border-color: var(--color-sage);
+}
+
+html.dark a.button-link.space-btn-filled:not(:disabled):hover,
+html.dark button.button-link.space-btn-filled:not(:disabled):hover {
+  background-color: var(--color-peach);
+  border-color: var(--color-peach);
+  color: var(--color-jet);
+}
+
 a.button-link.space-btn-outlined:not(:disabled),
 button.button-link.space-btn-outlined:not(:disabled) {
-  @apply border border-black bg-transparent text-black hover:border-space-red hover:text-space-red dark:border-whitesmoke dark:bg-transparent dark:text-whitesmoke dark:hover:border-space-yellow dark:hover:text-space-yellow;
+  background-color: transparent;
+  color: var(--color-jet);
+  border-color: var(--color-jet);
+}
+
+a.button-link.space-btn-outlined:not(:disabled):hover,
+button.button-link.space-btn-outlined:not(:disabled):hover {
+  border-color: var(--color-coral-pink);
+  color: var(--color-coral-pink);
+}
+
+html.dark a.button-link.space-btn-outlined:not(:disabled),
+html.dark button.button-link.space-btn-outlined:not(:disabled) {
+  background-color: transparent;
+  color: whitesmoke;
+  border-color: var(--color-ash-gray);
+}
+
+html.dark a.button-link.space-btn-outlined:not(:disabled):hover,
+html.dark button.button-link.space-btn-outlined:not(:disabled):hover {
+  border-color: var(--color-peach);
+  color: var(--color-peach);
 }
 
 html.dark a:not(.button-link) {
@@ -108,15 +188,15 @@ html.dark a:not(.button-link) {
 }
 
 html.light a:not(.button-link) {
-  @apply text-black;
+  color: var(--color-jet);
 }
 
 html.light a:not(.button-link):hover {
-  @apply text-space-red;
+  color: var(--color-coral-pink);
 }
 
 html.dark a:not(.button-link):hover {
-  @apply text-space-yellow;
+  color: var(--color-peach);
 }
 
 .page-content {

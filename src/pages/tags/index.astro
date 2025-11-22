@@ -21,6 +21,9 @@ const tags = getAllTags(posts).sort((tagA, tagB) => {
 <MainLayout
   activePage="tags"
   pageTitle={siteConfig.title + " | " + "Tags Index"}
+  seo={{
+    description: "Browse all tags and topics on " + siteConfig.title,
+  }}
 >
   <div class="page-content">
     <h1 class="sigmar-ff text-balance">Tags</h1>

@@ -23,7 +23,10 @@ export default defineConfig({
       progress: true,
     }),
     preact(),
-    sitemap(),
+    sitemap({
+      // Generate single sitemap file with all URLs
+      entryLimit: 50000,
+    }),
   ],
 
   image: {

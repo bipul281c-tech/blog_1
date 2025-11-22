@@ -12,9 +12,10 @@ const { class: className } = Astro.props;
     <section
       id="subscribe"
       class:list={[
-        "p-8 flex flex-col items-center border border-dashed border-gray-500 rounded-2xl text-center",
+        "p-8 flex flex-col items-center border border-dashed rounded-2xl text-center",
         className,
       ]}
+      style="border-color: var(--color-ash-gray);"
     >
       {subscribe.title && (
         <h2
@@ -46,11 +47,24 @@ const { class: className } = Astro.props;
           type="email"
           name="email"
           id="email"
-          class="w-full h-9 px-5 py-2 text-sm bg-transparent outline-gray-500 rounded-full kanit-light placeholder:text-gray-500/50 dark:placeholder:text-gray-300/50 focus:outline-space-red dark:focus:outline-space-yellow outline-1"
+          class="w-full h-9 px-5 py-2 text-sm bg-transparent rounded-full kanit-light outline-1"
+          style="outline-color: var(--color-ash-gray);"
           required=""
           value=""
           placeholder="Your email"
         />
+        <style>
+          #email::placeholder {
+            color: var(--color-ash-gray);
+            opacity: 0.6;
+          }
+          #email:focus {
+            outline-color: var(--color-coral-pink);
+          }
+          html.dark #email:focus {
+            outline-color: var(--color-peach);
+          }
+        </style>
         <Button
           type="submit"
           name="subscribe"

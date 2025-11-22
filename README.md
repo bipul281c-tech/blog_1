@@ -1,10 +1,10 @@
-# Space Ahead ✨ - An Astro v5 Personal Blog Template
+# GirlyGlowTalk ✨ - An Astro v5 Personal Blog Template
 
-A minimal space-inspired personal blog template, created by Siddhesh Thadeshwar.
+A fun and stylish personal blog template, created by Siddhesh Thadeshwar.
 
-![Space Ahead ✨](/space-ahead-preview.jpeg)
+![GirlyGlowTalk ✨](/girlytalk-preview.jpeg)
 
-See the [demo](https://djsiddz.github.io/space-ahead) to know more.
+See the [demo](https://djsiddz.github.io/girlytalk) to know more.
 
 ## 🆕 Real-like Demo
 
@@ -43,7 +43,7 @@ View **Mumbai Stories** - [Samay Anand's Blog](https://djsiddz.github.io/samay-a
 
 ### Getting Started
 
-1. [Create a new repo](https://github.com/new?template_name=space-ahead&template_owner=djsiddz) using this template.
+1. [Create a new repo](https://github.com/new?template_name=girlytalk&template_owner=djsiddz) using this template.
 2. Clone to repo to your local computer using `git clone <your-repo-url>`. Then `cd <your-repo-name>`.
 3. Setup `pnpm` and use `pnpm install` and then `pnpm dev`.
 4. Use the `astro.config.mjs` and `src/site.config.ts` files to setup the template to your liking.
@@ -94,7 +94,7 @@ You'll see the following folders and files:
 
 ### Credits
 
-- Generated Space Ahead ✨ logo and images for demo blog content using Microsoft Designer.
+- Generated GirlyGlowTalk ✨ logo and images for demo blog content using Microsoft Designer.
 - Homepage illustration by <a href="https://icons8.com/illustrations/author/ARh4OKrFtdfC">Pixeltrue Ouch!</a>
 - Inspired from these amazing Astro templates - [Dante](https://github.com/JustGoodUI/dante-astro-theme) & [Chiri](https://github.com/the3ash/astro-chiri). Please do check them out.
 

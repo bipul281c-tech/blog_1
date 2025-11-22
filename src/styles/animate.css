@@ -1,16 +1,16 @@
 html.light .swup-transition-overlay {
   background: linear-gradient(
     60deg,
-    var(--color-space-sand),
-    var(--color-whitesmoke)
+    var(--color-sage),
+    var(--color-peach)
   );
 }
 
 html.dark .swup-transition-overlay {
   background: linear-gradient(
     0deg,
-    var(--color-space-stone),
-    var(--color-black)
+    var(--color-jet),
+    #2a2827
   );
 }
 

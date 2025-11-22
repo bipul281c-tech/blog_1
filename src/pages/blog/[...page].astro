@@ -18,7 +18,13 @@ const { page } = Astro.props;
 const allPosts = page.data;
 ---
 
-<MainLayout activePage="blog" pageTitle={siteConfig.title + " | Blog Archive"}>
+<MainLayout
+  activePage="blog"
+  pageTitle={siteConfig.title + " | Blog Archive"}
+  seo={{
+    description: siteConfig.blog?.description,
+  }}
+>
   <div class="page-content py-8 text-center">
     <h1 class="sigmar-ff">Blog</h1>
     {

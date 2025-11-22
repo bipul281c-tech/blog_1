@@ -14,9 +14,9 @@ const { title, pubDate, description, image } = post.data;
     {
       image && image.url && (
         <>
-          {typeof image.url === 'string' ? (
+          {typeof image.url === "string" ? (
             <Image
-              class=""
+              class="w-full h-auto sm:w-[300px] sm:h-[167px] shrink-0 object-cover"
               src={image.url}
               alt={image.alt || ""}
               width={300}
@@ -25,7 +25,7 @@ const { title, pubDate, description, image } = post.data;
             />
           ) : (
             <Image
-              class=""
+              class="w-full h-auto sm:w-[300px] sm:h-[167px] shrink-0 object-cover"
               src={image.url}
               alt={image.alt || ""}
               width={300}

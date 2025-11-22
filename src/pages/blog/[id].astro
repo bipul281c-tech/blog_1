@@ -38,7 +38,20 @@ const { title, pubDate, author, tags = [], image } = post.data;
 const { Content } = await render(post);
 ---
 
-<MainLayout pageTitle={siteConfig.title + " | " + title}>
+<MainLayout
+  pageTitle={siteConfig.title + " | " + title}
+  seo={{
+    title: title,
+    description: post.data.description,
+    image: typeof image?.url === 'string' ? image.url : undefined,
+    imageAlt: image?.alt,
+    article: {
+      publishedTime: pubDate,
+      author: author,
+      tags: tags,
+    }
+  }}
+>
   <div class="page-content">
     <h1 class="sigmar-ff text-center text-balance">{title}</h1>
     <p class="leading-8 text-center kanit-regular text-balance text-xs">

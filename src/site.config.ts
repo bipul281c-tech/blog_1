@@ -70,11 +70,11 @@ export type SiteConfig = {
 
 const siteConfig: SiteConfig = {
     website: deploymentConfig.production.url,
-    title: 'Space Ahead',
-    description: 'A minimal space-inspired personal blog template built with Astro.js and Tailwind CSS, by Siddhesh Thadeshwar',
+    title: 'Daily Meditation Guide',
+    description: 'Your daily companion for mindfulness, meditation, and finding inner peace.',
     image: {
-        src: '/space-ahead-preview.jpeg',
-        alt: 'Space Ahead ✨ - A minimal space-inspired personal blog template, created by Siddhesh Thadeshwar.'
+        src: '/girlytalk-preview.jpeg',
+        alt: 'DailyMeditationGuide 🧘‍♀️ - Your daily dose of mindfulness.'
     },
     headerNavLinks: [
         {
@@ -111,7 +111,7 @@ const siteConfig: SiteConfig = {
             text: 'RSS Feed',
             href: withBase('/rss.xml')
         },
-                {
+        {
             text: 'Sitemap',
             href: withBase('/sitemap-index.xml')
         }
@@ -131,16 +131,16 @@ const siteConfig: SiteConfig = {
         }
     ],
     hero: {
-        eyebrowText: 'Galaxy of Adventures',
-        title: 'Space Ahead ✨',
-        text: "Written by Astro-naut Sid, a space explorer at Beyond Earth.",
+        eyebrowText: 'Mindful Moments',
+        title: 'Daily Meditation Guide 🧘‍♀️',
+        text: "Find your center, embrace the calm, and discover the power of daily mindfulness.",
         image: {
-            src: '/assets/images/pixeltrue-space-discovery.svg',
-            alt: 'A person sitting at a desk in front of a computer'
+            src: '/assets/images/meditation-hero-girl.svg',
+            alt: 'A girl meditating in a peaceful state with mindfulness icons'
         },
         actions: [
             {
-                text: 'Read Now',
+                text: 'Start Meditating',
                 href: withBase('/blog')
             },
             {
@@ -151,15 +151,15 @@ const siteConfig: SiteConfig = {
     },
     about: {
         title: 'About',
-        text: 'Space Ahead is a blog about space exploration and travel. It is written by Astro-naut Sid, a space explorer at Beyond Earth. Sid is known for his love of adventure and his insatiable curiosity about the universe. He has explored countless planets, discovered new life forms, and made friends with aliens along the way. 🚀',
+        text: 'DailyMeditationGuide is your sanctuary for peace and personal growth. We believe in the transformative power of meditation and mindfulness. Here, we share tips, guides, and stories to help you navigate life with grace, intention, and a touch of sparkle. ✨',
     },
     contactInfo: {
         title: 'Contact',
-        text: "Hi! Whether you have a question, a suggestion, or just want to share your thoughts, I'm all ears. Feel free to get in touch through any of the methods below:",
+        text: "Namaste! 🙏 Whether you have a question about your practice, a suggestion for a topic, or just want to share your journey, I'd love to hear from you.",
         email: {
-            text: "Drop me an email and I’ll do my best to respond as soon as possible.",
-            href: "mailto:example@example.com",
-            email: "example@example.com"
+            text: "Send me a message and I'll get back to you with mindful attention.",
+            href: "mailto:hello@dailymeditationguide.com",
+            email: "hello@dailymeditationguide.com"
         },
         socialProfiles: [
             {
@@ -177,12 +177,12 @@ const siteConfig: SiteConfig = {
         ]
     },
     subscribe: {
-        title: 'Subscribe to Space Ahead',
-        text: 'One update per week. All the latest stories in your inbox.',
+        title: 'Join Our Circle',
+        text: 'Receive weekly mindfulness tips, guided meditations, and inspiration directly to your inbox.',
         formUrl: '#'
     },
     blog: {
-        description: "Read about my space adventures, explorations and the aliens I've met on my journeys."
+        description: "Explore our collection of articles on meditation techniques, mindfulness practices, and living a balanced life."
     },
     postsPerPage: 2,
     recentPostLimit: 3

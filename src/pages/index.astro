@@ -15,6 +15,11 @@ const allPosts = (await getCollection("blogs")).sort(sortItemsByDateDesc);
 <MainLayout
   activePage="home"
   pageTitle={siteConfig.title + " | An Astro Personal Blog Template"}
+  seo={{
+    description: siteConfig.description,
+    image: siteConfig.image?.src,
+    imageAlt: siteConfig.image?.alt,
+  }}
 >
   <div
     class="jumbo-banner flex flex-col sm:flex-row sm:items-center sm:justify-between w-full px-4 my-12 gap-6"
@@ -22,7 +27,7 @@ const allPosts = (await getCollection("blogs")).sort(sortItemsByDateDesc);
     <div class="w-full sm:w-fit sm:max-w-1/2">
       {
         siteConfig.hero?.eyebrowText && (
-          <span class="tag rounded-full text-xs px-2 py-0 border border-gray-500 kanit-light">
+          <span class="tag rounded-full text-xs px-2 py-0 border kanit-light" style="border-color: var(--color-ash-gray); color: var(--color-coral-pink);">
             {siteConfig.hero?.eyebrowText}
           </span>
         )

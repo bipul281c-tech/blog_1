@@ -36,13 +36,13 @@ export const deploymentConfig: DeploymentConfig = {
         // Vercel automatically provides VERCEL_URL
         // For custom domains, set SITE_URL in Vercel dashboard
         url: process.env.SITE_URL ||
-             (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:4321'),
+            (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://dailymeditationguide.com'),
         base: process.env.BASE_PATH || '/'
     },
     // GitHub Pages configuration
     github: {
         url: process.env.SITE_URL || 'https://djsiddz.github.io',
-        base: process.env.BASE_PATH || '/space-ahead'
+        base: process.env.BASE_PATH || '/girlytalk'
     }
 };
 

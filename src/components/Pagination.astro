@@ -14,7 +14,8 @@ const { page, class: className } = Astro.props;
   ]}
 >
   <IconButton
-    class="disabled:fill-gray-500 disabled:hover:cursor-not-allowed disabled:hover:text-gray-500!"
+    class="disabled:hover:cursor-not-allowed"
+    style="--disabled-color: var(--color-ash-gray);"
     href={page.url.prev}
     aria-label={`Go to page ${page.currentPage - 1} of ${page.lastPage}`}
     disabled={!page.url.prev}
@@ -25,11 +26,22 @@ const { page, class: className } = Astro.props;
     >Page {page.currentPage} of {page.lastPage}</span
   >
   <IconButton
-    class="disabled:fill-gray-500 disabled:hover:cursor-not-allowed disabled:hover:text-gray-500!"
+    class="disabled:hover:cursor-not-allowed"
+    style="--disabled-color: var(--color-ash-gray);"
     href={page.url.next}
     aria-label={`Go to page ${page.currentPage + 1} of ${page.lastPage}`}
     disabled={!page.url.next}
   >
     <ArrowRight class="w-5 h-5 fill-current" />
   </IconButton>
+
+  <style>
+    :global(.disabled) {
+      fill: var(--disabled-color);
+      color: var(--disabled-color);
+    }
+    :global(.disabled:hover) {
+      color: var(--disabled-color) !important;
+    }
+  </style>
 </nav>

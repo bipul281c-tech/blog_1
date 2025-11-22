@@ -4,18 +4,22 @@ import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 import Subscribe from "../components/Subscribe.astro";
+import SEO, { type SEOProps } from "../components/SEO.astro";
 import { withBase } from "../utils/helpers";
 import siteConfig from "../site.config";
+import Analytics from "@vercel/analytics/astro";
 
 type LayoutProps = {
   pageTitle: string;
   activePage: string;
   showSubscribeForm?: boolean;
+  seo?: Partial<SEOProps>;
 };
 const {
   pageTitle,
   activePage,
   showSubscribeForm = true,
+  seo = {},
 } = Astro.props as LayoutProps;
 ---
 
@@ -23,7 +27,7 @@ const {
 <html lang="en" class="antialiased break-words">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href={withBase(`/space-ahead-logo.png`)} />
+    <link rel="icon" href={withBase(`/girlytalk-logo.png`)} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href={withBase(`/sitemap-index.xml`)} />
@@ -39,7 +43,7 @@ const {
       title={siteConfig.title + " - RSS Feed"}
       href={new URL(withBase("/rss.xml"), Astro.site)}
     />
-    <title>{pageTitle}</title>
+    <SEO title={pageTitle} {...seo} />
   </head>
   <body>
     <main class="max-w-3xl mx-auto min-h-screen">
@@ -48,5 +52,6 @@ const {
       {showSubscribeForm && <Subscribe class="my-12 w-full" />}
       <Footer />
     </main>
+    <Analytics />
   </body>
 </html>
