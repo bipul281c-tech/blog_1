@@ -3,6 +3,7 @@ import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
 import swup from "@swup/astro";
 import tailwindcss from "@tailwindcss/vite";
+import AstroPWA from "@vite-pwa/astro";
 
 // Import deployment configuration
 // This allows you to manage all URLs in one place
@@ -26,6 +27,30 @@ export default defineConfig({
     sitemap({
       // Generate single sitemap file with all URLs
       entryLimit: 50000,
+    }),
+    AstroPWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'GirlyGlowTalk',
+        short_name: 'GirlyGlowTalk',
+        description: 'GirlyGlowTalk Blog',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      }
     }),
   ],
 

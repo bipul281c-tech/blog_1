@@ -96,10 +96,20 @@ footer {
 
 h1 {
   @apply py-3 text-3xl leading-tight sm:py-6 sm:text-6xl;
+  color: var(--color-soft-charcoal);
+}
+
+html.dark h1 {
+  color: var(--color-lavender-mist);
 }
 
 h2 {
   @apply py-2 text-lg leading-snug sm:py-4 sm:text-3xl;
+  color: var(--color-calm-sage);
+}
+
+html.dark h2 {
+  color: var(--color-soft-rose);
 }
 
 p {

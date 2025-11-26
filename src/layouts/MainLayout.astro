@@ -4,6 +4,7 @@ import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 import Subscribe from "../components/Subscribe.astro";
+import PWAInstallPrompt from "../components/PWAInstallPrompt.astro";
 import SEO, { type SEOProps } from "../components/SEO.astro";
 import { withBase } from "../utils/helpers";
 import siteConfig from "../site.config";
@@ -62,6 +63,7 @@ const {
       {showSubscribeForm && <Subscribe class="my-12 w-full" />}
       <Footer />
     </main>
+    <PWAInstallPrompt />
     <Analytics />
   </body>
 </html>
