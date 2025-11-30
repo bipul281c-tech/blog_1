@@ -59,13 +59,9 @@ const audioSrc = audioMatch ? audioMatch[1] : null;
   }}
   maxWidth="max-w-6xl"
 >
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8">
-    <aside class="lg:col-span-3 order-2 lg:order-2">
-      <div class="lg:sticky lg:top-24">
-        <TableOfContents headings={headings} />
-      </div>
-    </aside>
-    <article class="lg:col-span-9 order-1 lg:order-1 max-w-3xl mx-auto w-full">
+  <TableOfContents headings={headings} />
+  <div class="my-8">
+    <article class="max-w-3xl mx-auto w-full">
       <div class="page-content">
         <h1 class="sigmar-ff text-center text-balance px-4">{title}</h1>
         <p

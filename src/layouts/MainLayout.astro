@@ -67,5 +67,20 @@ const {
     </main>
     <PWAInstallPrompt />
     <Analytics />
+    <script is:inline>
+      function initScrollFix() {
+        if (window.swup && window.swup.hooks) {
+          window.swup.hooks.on("content:replace", () => {
+            window.scrollTo({ top: 0, behavior: "instant" });
+          });
+        }
+      }
+
+      if (window.swup) {
+        initScrollFix();
+      } else {
+        document.addEventListener("swup:enable", initScrollFix);
+      }
+    </script>
   </body>
 </html>

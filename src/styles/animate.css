@@ -1,17 +1,22 @@
 html.light .swup-transition-overlay {
-  background: linear-gradient(
-    60deg,
-    var(--color-sage),
-    var(--color-peach)
-  );
+  background: linear-gradient(60deg,
+      var(--color-sage),
+      var(--color-peach));
 }
 
 html.dark .swup-transition-overlay {
-  background: linear-gradient(
-    0deg,
-    var(--color-jet),
-    #2a2827
-  );
+  background: linear-gradient(0deg,
+      var(--color-jet),
+      #2a2827);
+}
+
+.swup-transition-overlay {
+  position: fixed;
+  top: -10vh;
+  left: 0;
+  width: 100vw;
+  height: 120vh;
+  z-index: 9999;
 }
 
 body {
