@@ -31,9 +31,9 @@ export default defineConfig({
     AstroPWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'GirlyGlowTalk',
-        short_name: 'GirlyGlowTalk',
-        description: 'GirlyGlowTalk Blog',
+        name: 'Daily Meditation Guide',
+        short_name: 'Daily Meditation',
+        description: 'Daily Meditation Guide - Your daily companion for mindfulness',
         theme_color: '#ffffff',
         icons: [
           {

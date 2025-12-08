@@ -30,65 +30,74 @@ const {
 } = Astro.props as SEOProps;
 
 // Construct full page title
-const pageTitle = title === siteConfig.title ? title : `${title} | ${siteConfig.title}`;
+const pageTitle =
+  title === siteConfig.title ? title : `${title} | ${siteConfig.title}`;
 
 // Construct absolute image URL
 const imageUrl = image
-  ? new URL(image.startsWith('/') ? withBase(image) : image, Astro.site).toString()
+  ? new URL(
+      image.startsWith("/") ? withBase(image) : image,
+      Astro.site,
+    ).toString()
   : undefined;
 
 // Construct canonical URL
-const canonical = typeof canonicalURL === 'string' 
-  ? new URL(canonicalURL, Astro.site).toString()
-  : canonicalURL.toString();
+const canonical =
+  typeof canonicalURL === "string"
+    ? new URL(canonicalURL, Astro.site).toString()
+    : canonicalURL.toString();
 
 // Robots meta tag
 const robotsContent = [
-  noindex ? 'noindex' : 'index',
-  nofollow ? 'nofollow' : 'follow'
-].join(', ');
+  noindex ? "noindex" : "index",
+  nofollow ? "nofollow" : "follow",
+].join(", ");
 
 // JSON-LD structured data
-const jsonLd = article ? {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": title,
-  "description": description,
-  "image": imageUrl,
-  "datePublished": article.publishedTime?.toISOString(),
-  "dateModified": article.modifiedTime?.toISOString() || article.publishedTime?.toISOString(),
-  "author": {
-    "@type": "Person",
-    "name": article.author || "Anonymous"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": siteConfig.title,
-    "logo": {
-      "@type": "ImageObject",
-      "url": new URL(withBase("/girlytalk-logo.png"), Astro.site).toString()
+const jsonLd = article
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: title,
+      description: description,
+      image: imageUrl,
+      datePublished: article.publishedTime?.toISOString(),
+      dateModified:
+        article.modifiedTime?.toISOString() ||
+        article.publishedTime?.toISOString(),
+      author: {
+        "@type": "Person",
+        name: article.author || "Anonymous",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: siteConfig.title,
+        logo: {
+          "@type": "ImageObject",
+          url: new URL(withBase("/meditation-logo.png"), Astro.site).toString(),
+        },
+      },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": canonical,
+      },
+      keywords: article.tags?.join(", "),
     }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": canonical
-  },
-  "keywords": article.tags?.join(', ')
-} : {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": siteConfig.title,
-  "description": siteConfig.description,
-  "url": Astro.site?.toString(),
-  "publisher": {
-    "@type": "Organization",
-    "name": siteConfig.title,
-    "logo": {
-      "@type": "ImageObject",
-      "url": new URL(withBase("/girlytalk-logo.png"), Astro.site).toString()
-    }
-  }
-};
+  : {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: siteConfig.title,
+      description: siteConfig.description,
+      url: Astro.site?.toString(),
+      publisher: {
+        "@type": "Organization",
+        name: siteConfig.title,
+        logo: {
+          "@type": "ImageObject",
+          url: new URL(withBase("/meditation-logo.png"), Astro.site).toString(),
+        },
+      },
+    };
 ---
 
 <!-- Primary Meta Tags -->
@@ -106,19 +115,55 @@ const jsonLd = article ? {
 <meta property="og:site_name" content={siteConfig.title} />
 {imageUrl && <meta property="og:image" content={imageUrl} />}
 {imageUrl && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
-{article?.publishedTime && <meta property="article:published_time" content={article.publishedTime.toISOString()} />}
-{article?.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime.toISOString()} />}
+{
+  article?.publishedTime && (
+    <meta
+      property="article:published_time"
+      content={article.publishedTime.toISOString()}
+    />
+  )
+}
+{
+  article?.modifiedTime && (
+    <meta
+      property="article:modified_time"
+      content={article.modifiedTime.toISOString()}
+    />
+  )
+}
 {article?.author && <meta property="article:author" content={article.author} />}
-{article?.tags?.map(tag => <meta property="article:tag" content={tag} />)}
+{article?.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
 
 <!-- Twitter -->
-<meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
+<meta
+  name="twitter:card"
+  content={imageUrl ? "summary_large_image" : "summary"}
+/>
 <meta name="twitter:url" content={canonical} />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
 {imageUrl && <meta name="twitter:image" content={imageUrl} />}
 {imageUrl && imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
 
+<!-- Theme color for mobile browsers -->
+<meta name="theme-color" content="#10b981" />
+
+<!-- Author meta -->
+{article?.author && <meta name="author" content={article.author} />}
+
+<!-- Language -->
+<meta property="og:locale" content="en_US" />
+
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.title,
+    url: Astro.site?.toString(),
+    logo: new URL(withBase("/meditation-logo.png"), Astro.site).toString(),
+    sameAs: ["https://www.youtube.com/@DailyMeditationn"],
+  })}
+/>

@@ -1,0 +1,70 @@
+---
+import { withBase } from "../utils/helpers";
+
+export interface Props {
+    className?: string;
+    items?: {
+        label: string;
+        href: string;
+    }[];
+}
+
+const { className = "", items = [] } = Astro.props;
+
+// Default items if none provided (Home > Blog)
+const breadcrumbItems =
+    items.length > 0
+        ? items
+        : [
+              { label: "Home", href: "/" },
+              { label: "Blog", href: "/blog" },
+          ];
+
+// Generate JSON-LD schema
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbItems.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.label,
+        item: new URL(withBase(item.href), Astro.site).toString(),
+    })),
+};
+---
+
+<nav aria-label="Breadcrumb" class={`text-sm text-gray-400 mb-4 ${className}`}>
+    <ol class="flex flex-wrap items-center gap-2">
+        {
+            breadcrumbItems.map((item, index) => (
+                <li class="flex items-center gap-2">
+                    {index > 0 && (
+                        <span class="text-gray-600" aria-hidden="true">
+                            /
+                        </span>
+                    )}
+                    <a
+                        href={withBase(item.href)}
+                        class={`hover:text-emerald-400 transition-colors ${
+                            index === breadcrumbItems.length - 1
+                                ? "text-emerald-400 font-medium pointer-events-none"
+                                : ""
+                        }`}
+                        aria-current={
+                            index === breadcrumbItems.length - 1
+                                ? "page"
+                                : undefined
+                        }
+                    >
+                        {item.label}
+                    </a>
+                </li>
+            ))
+        }
+    </ol>
+</nav>
+
+<script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbSchema)}
+/>

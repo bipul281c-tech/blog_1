@@ -40,7 +40,20 @@ const {
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7803867089582138"
       crossorigin="anonymous"></script>
-    <link rel="icon" href={withBase(`/girlytalk-logo.png`)} />
+    <link
+      rel="preload"
+      href={withBase("/meditation-logo.png")}
+      as="image"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.gstatic.com/s/kanit/v15/nKKX-Go6G5tXcr72Kzh_LQ.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="icon" href={withBase(`/meditation-logo.png`)} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href={withBase(`/sitemap-index.xml`)} />

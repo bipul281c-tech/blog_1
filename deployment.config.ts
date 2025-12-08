@@ -41,7 +41,7 @@ export const deploymentConfig: DeploymentConfig = {
     // GitHub Pages configuration
     github: {
         url: process.env.SITE_URL || 'https://djsiddz.github.io',
-        base: process.env.BASE_PATH || '/girlytalk'
+        base: process.env.BASE_PATH || '/dailymeditationguide'
     }
 };
 
