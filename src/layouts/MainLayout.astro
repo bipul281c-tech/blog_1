@@ -1,0 +1,99 @@
+---
+import "../styles/global.css";
+
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import Subscribe from "../components/Subscribe.astro";
+import PWAInstallPrompt from "../components/PWAInstallPrompt.astro";
+import SEO, { type SEOProps } from "../components/SEO.astro";
+import { withBase } from "../utils/helpers";
+import siteConfig from "../site.config";
+import Analytics from "@vercel/analytics/astro";
+
+type LayoutProps = {
+  pageTitle: string;
+  activePage: string;
+  showSubscribeForm?: boolean;
+  seo?: Partial<SEOProps>;
+  maxWidth?: string;
+};
+const {
+  pageTitle,
+  activePage,
+  showSubscribeForm = true,
+  seo = {},
+  maxWidth = "max-w-3xl",
+} = Astro.props as LayoutProps;
+---
+
+<!doctype html>
+<html lang="en" class="antialiased break-words">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="google-site-verification"
+      content="2AYfIRhHihBJ186gPAuPWO7VSRoZTw8iSZKDiZdnEL4"
+    />
+    <meta name="google-adsense-account" content="ca-pub-7803867089582138" />
+    <meta name="p:domain_verify" content="85d9d9b0c5711e75bba6aaccfa86dfb5" />
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7803867089582138"
+      crossorigin="anonymous"></script>
+    <link
+      rel="preload"
+      href={withBase("/meditation-logo.png")}
+      as="image"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.gstatic.com/s/kanit/v15/nKKX-Go6G5tXcr72Kzh_LQ.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="icon" href={withBase(`/meditation-logo.png`)} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href={withBase(`/sitemap-index.xml`)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sigmar&family=Kanit:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={siteConfig.title + " - RSS Feed"}
+      href={new URL(withBase("/rss.xml"), Astro.site)}
+    />
+    <SEO title={pageTitle} {...seo} />
+  </head>
+  <body>
+    <main class={`mx-auto min-h-screen px-4 sm:px-6 ${maxWidth}`}>
+      <Nav activePage={activePage} maxWidth={maxWidth} />
+      <slot />
+      {showSubscribeForm && <Subscribe class="my-12 w-full" />}
+      <Footer />
+    </main>
+    <PWAInstallPrompt />
+    <Analytics />
+    <script is:inline>
+      function initScrollFix() {
+        if (window.swup && window.swup.hooks) {
+          window.swup.hooks.on("content:replace", () => {
+            window.scrollTo({ top: 0, behavior: "instant" });
+          });
+        }
+      }
+
+      if (window.swup) {
+        initScrollFix();
+      } else {
+        document.addEventListener("swup:enable", initScrollFix);
+      }
+    </script>
+  </body>
+</html>

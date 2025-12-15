@@ -1,0 +1,424 @@
+---
+interface Props {
+    audioSrc: string;
+    title: string;
+}
+
+const { audioSrc, title } = Astro.props;
+---
+
+<div class="audio-player-wrapper" id="audioPlayerContainer">
+    <audio id="audioElement" src={audioSrc} preload="metadata"></audio>
+
+    <div class="audio-player-glass">
+        <!-- Progress Bar (Top Edge) -->
+        <div class="progress-container-top">
+            <div id="progressFill" class="progress-fill"></div>
+            <input
+                type="range"
+                id="progressSlider"
+                class="progress-slider"
+                min="0"
+                max="100"
+                value="0"
+                aria-label="Seek"
+            />
+        </div>
+
+        <div class="player-content">
+            <!-- Play/Pause Button -->
+            <button id="playPauseBtn" class="play-pause-btn" aria-label="Play">
+                <svg
+                    id="playIcon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+                <svg
+                    id="pauseIcon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    style="display: none;"
+                >
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path>
+                </svg>
+            </button>
+
+            <!-- Info Section -->
+            <div class="track-info">
+                <div class="badges-row">
+                    <span class="badge-pill badge-ad-free">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="w-3 h-3"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Ad-free
+                    </span>
+                    <span class="badge-pill badge-guided">
+                        Listen Full Guided Meditation
+                    </span>
+                </div>
+
+                <div class="title-row">
+                    <h3 class="track-title">{title}</h3>
+                    <span id="timeDisplay" class="time-display"
+                        >0:00 / 0:00</span
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .audio-player-wrapper {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 460px; /* Slightly wider for new badge */
+        z-index: 100;
+        font-family: "Kanit", sans-serif;
+    }
+
+    .audio-player-glass {
+        position: relative;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 24px;
+        box-shadow:
+            0 10px 40px -10px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+        overflow: hidden;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .audio-player-glass:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    :global(html.dark) .audio-player-glass {
+        background: rgba(30, 41, 59, 0.85);
+        box-shadow:
+            0 10px 40px -10px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    }
+
+    :global(html.dark) .audio-player-glass:hover {
+        background: rgba(30, 41, 59, 0.95);
+    }
+
+    /* Progress Bar at Top */
+    .progress-container-top {
+        position: relative;
+        width: 100%;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+    }
+
+    :global(html.dark) .progress-container-top {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+            90deg,
+            var(--color-lavender-mist, #a78bfa),
+            var(--color-calm-sage, #34d399)
+        );
+        transition: width 0.1s linear;
+    }
+
+    .progress-slider {
+        position: absolute;
+        top: -5px; /* Increase hit area */
+        left: 0;
+        width: 100%;
+        height: 14px;
+        opacity: 0;
+        cursor: pointer;
+        margin: 0;
+        z-index: 2;
+    }
+
+    /* Content Layout */
+    .player-content {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        gap: 16px;
+    }
+
+    /* Play Button */
+    .play-pause-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(
+            135deg,
+            var(--color-lavender-mist, #a78bfa),
+            var(--color-calm-sage, #34d399)
+        );
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+        transition: transform 0.2s ease;
+    }
+
+    .play-pause-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .play-pause-btn:active {
+        transform: scale(0.95);
+    }
+
+    .play-pause-btn svg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+    }
+
+    /* Track Info */
+    .track-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0; /* Text truncation fix */
+        gap: 4px;
+    }
+
+    .badges-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 2px 8px;
+        border-radius: 10px;
+        white-space: nowrap;
+    }
+
+    .badge-ad-free {
+        color: var(--color-calm-sage, #10b981);
+        background: rgba(16, 185, 129, 0.1);
+    }
+
+    :global(html.dark) .badge-ad-free {
+        color: #34d399;
+        background: rgba(52, 211, 153, 0.15);
+    }
+
+    .badge-guided {
+        color: var(--color-lavender-mist, #8b5cf6);
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    :global(html.dark) .badge-guided {
+        color: #a78bfa;
+        background: rgba(167, 139, 250, 0.15);
+    }
+
+    .badge-ad-free svg {
+        width: 10px;
+        height: 10px;
+    }
+
+    .title-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .track-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--color-soft-charcoal, #333);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    :global(html.dark) .track-title {
+        color: #f1f5f9;
+    }
+
+    /* Time & Duration */
+    .time-display {
+        font-size: 0.75rem;
+        font-variant-numeric: tabular-nums;
+        color: rgba(0, 0, 0, 0.5);
+        font-weight: 500;
+        flex-shrink: 0;
+    }
+
+    :global(html.dark) .time-display {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Mobile Tweaks */
+    @media (max-width: 480px) {
+        .audio-player-wrapper {
+            bottom: 1.5rem;
+            width: 94%;
+        }
+
+        .play-pause-btn {
+            width: 42px;
+            height: 42px;
+        }
+
+        .play-pause-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .badges-row {
+            gap: 4px;
+        }
+
+        .badge-pill {
+            font-size: 0.6rem;
+            padding: 1px 6px;
+        }
+    }
+</style>
+
+<script>
+    // Use a more robust initialization approach
+    function initAudioPlayer() {
+        // Wait a bit to ensure DOM is fully ready
+        const tryInit = () => {
+            const audio = document.getElementById(
+                "audioElement",
+            ) as HTMLAudioElement;
+            const playPauseBtn = document.getElementById("playPauseBtn");
+            const playIcon = document.getElementById("playIcon");
+            const pauseIcon = document.getElementById("pauseIcon");
+            const progressSlider = document.getElementById(
+                "progressSlider",
+            ) as HTMLInputElement;
+            const progressFill = document.getElementById("progressFill");
+            const timeDisplay = document.getElementById("timeDisplay");
+
+            if (!audio || !playPauseBtn || !progressSlider) {
+                // Retry after a short delay if elements not found
+                setTimeout(tryInit, 50);
+                return;
+            }
+
+            function formatTime(seconds: number): string {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, "0")}`;
+            }
+
+            function updateTimeDisplay() {
+                if (timeDisplay) {
+                    const current = formatTime(audio.currentTime);
+                    const total = formatTime(audio.duration || 0);
+                    timeDisplay.textContent = `${current} / ${total}`;
+                }
+            }
+
+            audio.addEventListener("loadedmetadata", () => {
+                updateTimeDisplay();
+                progressSlider.max = String(audio.duration);
+            });
+
+            playPauseBtn.addEventListener("click", () => {
+                if (audio.paused) {
+                    audio.play();
+                    if (playIcon && pauseIcon) {
+                        playIcon.style.display = "none";
+                        pauseIcon.style.display = "block";
+                    }
+                    playPauseBtn.setAttribute("aria-label", "Pause");
+                } else {
+                    audio.pause();
+                    if (playIcon && pauseIcon) {
+                        playIcon.style.display = "block";
+                        pauseIcon.style.display = "none";
+                    }
+                    playPauseBtn.setAttribute("aria-label", "Play");
+                }
+            });
+
+            audio.addEventListener("timeupdate", () => {
+                updateTimeDisplay();
+                progressSlider.value = String(audio.currentTime);
+                if (progressFill) {
+                    const percentage =
+                        (audio.currentTime / audio.duration) * 100;
+                    progressFill.style.width = `${percentage}%`;
+                }
+            });
+
+            progressSlider.addEventListener("input", () => {
+                audio.currentTime = Number(progressSlider.value);
+                updateTimeDisplay();
+            });
+
+            audio.addEventListener("ended", () => {
+                if (playIcon && pauseIcon) {
+                    playIcon.style.display = "block";
+                    pauseIcon.style.display = "none";
+                }
+                playPauseBtn.setAttribute("aria-label", "Play");
+                progressSlider.value = "0";
+                if (progressFill) {
+                    progressFill.style.width = "0%";
+                }
+                updateTimeDisplay();
+            });
+        };
+
+        tryInit();
+    }
+
+    // Initialize immediately and also on various load events
+    initAudioPlayer();
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initAudioPlayer);
+    }
+
+    // Also try on window load as a fallback
+    window.addEventListener("load", initAudioPlayer);
+</script>

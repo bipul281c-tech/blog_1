@@ -1,0 +1,128 @@
+---
+import TOCHeading from "./TOCHeading.astro";
+import Menu from "../icons/Menu.astro";
+import Close from "../icons/Close.astro";
+
+const { headings } = Astro.props;
+
+const toc = buildHierarchy(headings);
+
+function buildHierarchy(headings: any) {
+    const toc: any[] = [];
+    const parentHeadings = new Map();
+
+    if (!headings) return toc;
+
+    headings.forEach((h: any) => {
+        const heading = { ...h, subheadings: [] };
+        parentHeadings.set(heading.depth, heading);
+        // Change 2 to 1 if your markdown includes your <h1>
+        if (heading.depth === 2) {
+            toc.push(heading);
+        } else {
+            parentHeadings.get(heading.depth - 1)?.subheadings.push(heading);
+        }
+    });
+    return toc;
+}
+---
+
+<!-- Mobile Toggle Button -->
+<button
+    id="toc-toggle"
+    class="fixed top-1/2 right-0 -translate-y-1/2 z-50 py-3 px-1 rounded-l-lg shadow-md bg-[#f5f5f0] dark:bg-[var(--color-jet)] text-[var(--color-jet)] dark:text-whitesmoke border-y border-l border-[var(--color-ash-gray)] flex items-center justify-center transition-transform hover:-translate-x-1"
+    aria-label="Toggle Table of Contents"
+>
+    <span
+        class="text-xs font-bold tracking-widest uppercase"
+        style="writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);"
+        >Table of Contents</span
+    >
+</button>
+
+<!-- Mobile Drawer Overlay -->
+<div
+    id="toc-overlay"
+    class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity opacity-0"
+>
+</div>
+
+<!-- TOC Container (Sidebar on Desktop, Drawer on Mobile) -->
+<nav
+    id="toc-drawer"
+    class="toc-container fixed inset-y-0 right-0 z-50 w-72 bg-[#f5f5f0] dark:bg-[var(--color-jet)] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out p-6 rounded-l-2xl border-l border-dashed overflow-y-auto"
+>
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold kanit-bold">Table of Contents</h2>
+        <button id="toc-close" class="p-1" aria-label="Close Table of Contents">
+            <Close class="w-6 h-6" />
+        </button>
+    </div>
+
+    <ul class="text-sm kanit-light">
+        {toc.map((heading) => <TOCHeading heading={heading} />)}
+    </ul>
+</nav>
+
+<style>
+    .toc-container {
+        border-color: var(--color-ash-gray);
+    }
+</style>
+
+<script>
+    const tocToggle = document.getElementById("toc-toggle");
+    const tocClose = document.getElementById("toc-close");
+    const tocDrawer = document.getElementById("toc-drawer");
+    const tocOverlay = document.getElementById("toc-overlay");
+    const tocLinks = document.querySelectorAll(".toc-link");
+
+    function openTOC() {
+        tocDrawer?.classList.remove("translate-x-full");
+        tocOverlay?.classList.remove("hidden");
+        // Small delay to allow display:block to apply before opacity transition
+        setTimeout(() => {
+            tocOverlay?.classList.remove("opacity-0");
+        }, 10);
+    }
+
+    function closeTOC() {
+        tocDrawer?.classList.add("translate-x-full");
+        tocOverlay?.classList.add("opacity-0");
+        setTimeout(() => {
+            tocOverlay?.classList.add("hidden");
+        }, 300); // Match transition duration
+    }
+
+    tocToggle?.addEventListener("click", openTOC);
+    tocClose?.addEventListener("click", closeTOC);
+    tocOverlay?.addEventListener("click", closeTOC);
+
+    // Close drawer when a link is clicked
+    tocLinks.forEach((link) => {
+        link.addEventListener("click", closeTOC);
+    });
+
+    // Intersection Observer for highlighting active TOC link
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const id = entry.target.getAttribute("id");
+                if (entry.intersectionRatio > 0) {
+                    document
+                        .querySelector(`.toc-link[href="#${id}"]`)
+                        ?.classList.add("text-skin-accent", "font-bold");
+                } else {
+                    document
+                        .querySelector(`.toc-link[href="#${id}"]`)
+                        ?.classList.remove("text-skin-accent", "font-bold");
+                }
+            });
+        },
+        { rootMargin: "0px 0px -80% 0px" },
+    );
+
+    document.querySelectorAll("h2, h3, h4").forEach((section) => {
+        observer.observe(section);
+    });
+</script>

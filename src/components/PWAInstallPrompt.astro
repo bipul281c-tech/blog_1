@@ -1,0 +1,670 @@
+---
+// PWA Install Prompt Component
+---
+
+<div id="pwa-install-prompt" class="pwa-install-prompt hidden">
+    <div class="pwa-install-content">
+        <button id="pwa-close-btn" class="pwa-close-btn" aria-label="Close">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="pwa-icon">
+            <img
+                src="/meditation-logo.png"
+                alt="GirlyGlowTalk"
+                width="64"
+                height="64"
+            />
+        </div>
+
+        <div class="pwa-text">
+            <h3 class="pwa-title">Install GirlyGlowTalk</h3>
+            <p class="pwa-description" id="pwa-description">
+                Get quick access and read offline!
+            </p>
+        </div>
+
+        <button id="pwa-install-btn" class="pwa-install-btn">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span id="pwa-btn-text">Install App</span>
+        </button>
+    </div>
+</div>
+
+<!-- iOS Installation Instructions Modal -->
+<div id="ios-install-modal" class="ios-modal hidden">
+    <div class="ios-modal-overlay"></div>
+    <div class="ios-modal-content">
+        <button id="ios-close-btn" class="ios-close-btn" aria-label="Close">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="ios-modal-header">
+            <div class="ios-icon">
+                <img src="/meditation-logo.png" alt="GirlyGlowTalk" />
+            </div>
+            <h3>Install GirlyGlowTalk</h3>
+        </div>
+
+        <div class="ios-instructions">
+            <p class="ios-intro">Install this app on your iPhone or iPad:</p>
+
+            <div class="ios-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <p>
+                        Tap the <strong>Share</strong> button
+                        <span class="share-icon">
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                                ></path>
+                                <polyline points="16 6 12 2 8 6"></polyline>
+                                <line x1="12" y1="2" x2="12" y2="15"></line>
+                            </svg>
+                        </span>
+                    </p>
+                    <p class="step-hint">(at the bottom of Safari)</p>
+                </div>
+            </div>
+
+            <div class="ios-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <p>
+                        Scroll down and tap <strong>"Add to Home Screen"</strong
+                        >
+                        <span class="add-icon">
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="ios-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <p>Tap <strong>"Add"</strong> to confirm</p>
+                </div>
+            </div>
+        </div>
+
+        <button id="ios-got-it-btn" class="ios-got-it-btn">Got it!</button>
+    </div>
+</div>
+
+<style>
+    .pwa-install-prompt {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        padding: 1rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pwa-install-prompt.show {
+        transform: translateY(0);
+    }
+
+    .pwa-install-content {
+        position: relative;
+        max-width: 500px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 1rem;
+        padding: 1.25rem;
+        box-shadow:
+            0 20px 25px -5px rgba(0, 0, 0, 0.3),
+            0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .pwa-close-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        transition: all 0.2s;
+    }
+
+    .pwa-close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    .pwa-icon {
+        flex-shrink: 0;
+        width: 64px;
+        height: 64px;
+        border-radius: 1rem;
+        overflow: hidden;
+        background: white;
+        padding: 0.25rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .pwa-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.75rem;
+    }
+
+    .pwa-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .pwa-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: white;
+        margin: 0 0 0.25rem 0;
+        line-height: 1.3;
+    }
+
+    .pwa-description {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .pwa-install-btn {
+        flex-shrink: 0;
+        background: white;
+        color: #667eea;
+        border: none;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .pwa-install-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.3);
+    }
+
+    .pwa-install-btn:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+        .pwa-install-content {
+            padding: 1rem;
+            gap: 0.75rem;
+        }
+
+        .pwa-icon {
+            width: 56px;
+            height: 56px;
+        }
+
+        .pwa-title {
+            font-size: 1rem;
+        }
+
+        .pwa-description {
+            font-size: 0.8125rem;
+        }
+
+        .pwa-install-btn {
+            padding: 0.625rem 1rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    /* iOS Modal Styles */
+    .ios-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    .ios-modal.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .ios-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .ios-modal-content {
+        background-color: #fff;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        position: relative;
+        z-index: 10001;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    .ios-modal.show .ios-modal-content {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .ios-close-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        color: #666;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+    }
+
+    .ios-close-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+    .ios-modal-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    .ios-modal-header h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #333;
+    }
+
+    .ios-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    .ios-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .ios-instructions {
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    .ios-intro {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 1rem;
+    }
+
+    .ios-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .step-number {
+        background-color: #667eea;
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+        flex-shrink: 0;
+        margin-top: 0.25rem;
+    }
+
+    .step-content {
+        flex: 1;
+        color: #444;
+        font-size: 0.9rem;
+    }
+
+    .step-content p {
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .step-content strong {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .step-content .share-icon,
+    .step-content .add-icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 0.5rem;
+        width: 20px;
+        height: 20px;
+        color: #667eea;
+    }
+
+    .step-hint {
+        font-size: 0.8rem;
+        color: #777;
+        margin-top: 0.25rem;
+    }
+
+    .ios-got-it-btn {
+        width: 100%;
+        background-color: #667eea;
+        color: white;
+        border: none;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .ios-got-it-btn:hover {
+        background-color: #5a67d8;
+    }
+</style>
+
+<script>
+    // PWA Install Prompt Logic
+    let deferredPrompt: any = null;
+    const installPrompt = document.getElementById("pwa-install-prompt");
+    const installBtn = document.getElementById("pwa-install-btn");
+    const closeBtn = document.getElementById("pwa-close-btn");
+    const pwaDescription = document.getElementById("pwa-description");
+    const pwaBtnText = document.getElementById("pwa-btn-text");
+
+    // iOS Modal elements
+    const iosModal = document.getElementById("ios-install-modal");
+    const iosCloseBtn = document.getElementById("ios-close-btn");
+    const iosGotItBtn = document.getElementById("ios-got-it-btn");
+
+    // Check if already installed or dismissed
+    const isInstalled = localStorage.getItem("pwa-installed") === "true";
+    const isDismissed = localStorage.getItem("pwa-dismissed") === "true";
+
+    // Detect iOS
+    function isIOS() {
+        return (
+            /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+            !(window as any).MSStream
+        );
+    }
+
+    // Detect if running in standalone mode (already installed)
+    function isInStandaloneMode() {
+        return (
+            window.matchMedia("(display-mode: standalone)").matches ||
+            (window.navigator as any).standalone === true
+        );
+    }
+
+    // Show iOS install prompt
+    function showIOSPrompt() {
+        if (
+            !isInstalled &&
+            !isDismissed &&
+            installPrompt &&
+            pwaDescription &&
+            pwaBtnText
+        ) {
+            // Update button text for iOS
+            if (pwaBtnText) {
+                pwaBtnText.textContent = "How to Install";
+            }
+
+            setTimeout(() => {
+                installPrompt.classList.remove("hidden");
+                setTimeout(() => {
+                    installPrompt.classList.add("show");
+                }, 100);
+            }, 2000); // Show after 2 seconds
+        }
+    }
+
+    // Show iOS instructions modal
+    function showIOSModal() {
+        if (iosModal) {
+            iosModal.classList.remove("hidden");
+            setTimeout(() => {
+                iosModal.classList.add("show");
+            }, 10);
+        }
+    }
+
+    // Hide iOS modal
+    function hideIOSModal() {
+        if (iosModal) {
+            iosModal.classList.remove("show");
+            setTimeout(() => {
+                iosModal.classList.add("hidden");
+            }, 300);
+        }
+    }
+
+    // Listen for the beforeinstallprompt event (Android/Chrome)
+    window.addEventListener("beforeinstallprompt", (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+
+        // Show the install prompt if not already installed or dismissed AND not iOS
+        if (!isInstalled && !isDismissed && installPrompt && !isIOS()) {
+            setTimeout(() => {
+                installPrompt.classList.remove("hidden");
+                setTimeout(() => {
+                    installPrompt.classList.add("show");
+                }, 100);
+            }, 2000); // Show after 2 seconds
+        }
+    });
+
+    // Install button click handler
+    if (installBtn) {
+        installBtn.addEventListener("click", async () => {
+            // If iOS, show instructions modal
+            if (isIOS()) {
+                showIOSModal();
+                return;
+            }
+
+            // Android/Chrome installation
+            if (!deferredPrompt) {
+                return;
+            }
+
+            // Show the install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === "accepted") {
+                console.log("User accepted the install prompt");
+                localStorage.setItem("pwa-installed", "true");
+            } else {
+                console.log("User dismissed the install prompt");
+            }
+
+            // Hide the install prompt
+            hidePrompt();
+
+            // Clear the deferredPrompt
+            deferredPrompt = null;
+        });
+    }
+
+    // Close button click handler
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            localStorage.setItem("pwa-dismissed", "true");
+            hidePrompt();
+        });
+    }
+
+    // iOS modal close handlers
+    if (iosCloseBtn) {
+        iosCloseBtn.addEventListener("click", hideIOSModal);
+    }
+
+    if (iosGotItBtn) {
+        iosGotItBtn.addEventListener("click", () => {
+            hideIOSModal();
+            localStorage.setItem("pwa-dismissed", "true");
+            hidePrompt();
+        });
+    }
+
+    // Function to hide the prompt
+    function hidePrompt() {
+        if (installPrompt) {
+            installPrompt.classList.remove("show");
+            setTimeout(() => {
+                installPrompt.classList.add("hidden");
+            }, 400);
+        }
+    }
+
+    // Listen for app installed event
+    window.addEventListener("appinstalled", () => {
+        console.log("PWA was installed");
+        localStorage.setItem("pwa-installed", "true");
+        hidePrompt();
+    });
+
+    // Check if app is already installed (running in standalone mode)
+    if (isInStandaloneMode()) {
+        localStorage.setItem("pwa-installed", "true");
+    } else if (isIOS()) {
+        // Show iOS prompt
+        showIOSPrompt();
+    }
+</script>

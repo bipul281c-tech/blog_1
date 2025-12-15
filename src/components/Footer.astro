@@ -1,0 +1,59 @@
+---
+import siteConfig from "../site.config";
+import SiteIdentity from "./SiteIdentity.astro";
+import Youtube from "../icons/Youtube.astro";
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="kanit-light text-xs sm:text-sm">
+  <div
+    class="footer-primary flex flex-col items-center justify-center min-w-full border-t"
+    style="border-color: var(--color-ash-gray); opacity: 0.5;"
+  >
+    <div
+      class="flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-6 pt-6 pb-3 px-4 sm:px-6 text-center"
+    >
+      {
+        siteConfig.footerNavLinks?.map((link) => (
+          <a href={link.href} title={link.text}>
+            {link.text}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+  <div
+    class="footer-secondary flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 min-w-full"
+  >
+    <div
+      class="flex flex-row gap-2 items-center justify-center sm:justify-start text-balance text-center"
+    >
+      <span>&copy; {currentYear}</span>
+      {siteConfig.title}. All rights reserved.
+    </div>
+    <div class="flex flex-row gap-4 items-center justify-center sm:justify-end">
+      {
+        siteConfig.socialLinks?.map((link) => (
+          <a
+            href={link.href}
+            title={link.text}
+            target="_blank"
+            class="flex items-center gap-2"
+          >
+            {link.icon === "youtube" && <Youtube class="w-5 h-5" />}
+            {link.text}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+  <div
+    class="footer-identity h-32 sm:h-18 text-center overflow-clip sticky bottom-0 items-end"
+  >
+    <span
+      class="sigmar-ff text-6xl sm:text-[6.5rem] leading-none"
+      style="color: var(--color-ash-gray); opacity: 0.3;"
+      >{siteConfig.title}</span
+    >
+  </div>
+</footer>

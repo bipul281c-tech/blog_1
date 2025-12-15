@@ -1,0 +1,21 @@
+---
+const { heading } = Astro.props;
+---
+
+<li>
+    <a
+        href={"#" + heading.slug}
+        class="toc-link block py-1 hover:text-skin-accent transition-colors"
+    >
+        {heading.text}
+    </a>
+    {
+        heading.subheadings.length > 0 && (
+            <ul class="ml-4 border-l border-skin-line pl-2">
+                {heading.subheadings.map((subheading) => (
+                    <Astro.self heading={subheading} />
+                ))}
+            </ul>
+        )
+    }
+</li>

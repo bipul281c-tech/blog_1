@@ -1,0 +1,83 @@
+---
+import Button from "./Button.astro";
+import siteConfig from "../site.config";
+
+const subscribe = siteConfig.subscribe;
+
+const { class: className } = Astro.props;
+---
+
+{
+  subscribe?.formUrl && (
+    <section
+      id="subscribe"
+      class:list={[
+        "p-8 flex flex-col items-center border border-dashed rounded-2xl text-center",
+        className,
+      ]}
+      style="border-color: var(--color-ash-gray);"
+    >
+      {subscribe.title && (
+          <h2
+            class:list={[
+              "w-full max-w-xl leading-tight sigmar-ff font-medium flex flex-wrap items-center justify-center gap-3",
+              subscribe.text ? "mb-4" : "mb-8",
+            ]}
+          >
+            {subscribe.title}
+            <span
+              class="text-xs kanit-light px-2 py-1 rounded-full border"
+              style="border-color: var(--color-coral-pink); color: var(--color-coral-pink);"
+              >Coming Soon</span
+            >
+          </h2>
+      )}
+      {subscribe.text && (
+        <p class="w-full max-w-xl mb-8 text-sm leading-normal text-balance">
+          {subscribe.text}
+        </p>
+      )}
+      <form
+        action={subscribe.formUrl}
+        method="post"
+        id="subscribe-form"
+        name="subscribe-form"
+        class="w-full max-w-xl flex flex-col gap-3 sm:flex-row"
+        target="_blank"
+      >
+        <label for="email" class="sr-only">
+          Email Address
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="w-full h-10 px-4 py-2 text-sm bg-transparent rounded-full kanit-light outline-1 sm:h-9 sm:px-5"
+          style="outline-color: var(--color-ash-gray);"
+          required=""
+          value=""
+          placeholder="Your email"
+        />
+        <style>
+          #email::placeholder {
+            color: var(--color-ash-gray);
+            opacity: 0.6;
+          }
+          #email:focus {
+            outline-color: var(--color-coral-pink);
+          }
+          html.dark #email:focus {
+            outline-color: var(--color-peach);
+          }
+        </style>
+        <Button
+          type="submit"
+          name="subscribe"
+          class="space-btn-outlined w-full h-10 sm:w-auto sm:h-9"
+        >
+          Subscribe
+        </Button>
+      </form>
+    </section>
+  )
+}

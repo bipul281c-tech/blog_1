@@ -1,0 +1,257 @@
+@import url("animate.css");
+@import url("fonts.css");
+@import "tailwindcss";
+
+/* 0. color variables & fonts */
+/* 1. html elements */
+/* 2. utilities */
+
+/* 0. color variables & fonts */
+:root {
+  /* New Color Palette: Meditation Girly */
+  --soft-rose: #f0e592;
+  --lavender-mist: #bcc963;
+  --soft-charcoal: #2d694d;
+  --calm-sage: #658d57;
+  --warm-sand: #f2e694;
+
+  /* Legacy color variables (kept for backward compatibility) */
+  --space-red: #90393a;
+  --space-yellow: #ffff85;
+  --space-sand: #e2d1c3;
+  --space-stone: #434343;
+}
+
+/* Required to ensure dark: modifiers work when manually toggling mode */
+/* REF: https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Kanit", "sans-serif";
+
+  /* New Color Palette for Tailwind */
+  --color-soft-rose: var(--soft-rose);
+  --color-lavender-mist: var(--lavender-mist);
+  --color-soft-charcoal: var(--soft-charcoal);
+  --color-calm-sage: var(--calm-sage);
+  --color-warm-sand: var(--warm-sand);
+
+  /* Mapping old names to new colors to avoid breaking existing classes immediately */
+  --color-peach: var(--soft-rose);
+  --color-coral-pink: var(--lavender-mist);
+  --color-jet: var(--soft-charcoal);
+  --color-sage: var(--calm-sage);
+  --color-ash-gray: var(--warm-sand);
+
+  /* Legacy colors (kept for backward compatibility) */
+  --color-space-red: var(--space-red);
+  --color-space-yellow: var(--space-yellow);
+  --color-space-sand: var(--space-sand);
+  --color-space-stone: var(--space-stone);
+  --color-whitesmoke: whitesmoke;
+}
+
+/* 1. html elements */
+html,
+body {
+  @apply mx-0 my-auto min-h-screen p-0 text-base;
+  overscroll-behavior: none;
+}
+
+html.dark body {
+  background-color: var(--color-jet);
+  @apply text-whitesmoke;
+}
+
+html.light body {
+  background-color: #f5f5f0;
+  color: var(--color-jet);
+}
+
+/* semantic elements */
+header {
+  @apply sticky top-4 z-20 mr-auto ml-auto flex w-full max-w-3xl flex-col items-center justify-center px-4 py-0 text-base sm:px-0;
+}
+
+header>nav {
+  @apply flex flex-row items-center justify-between gap-2 rounded-4xl px-3 py-2 text-xs backdrop-blur-3xl sm:gap-8 sm:px-5 sm:py-3 sm:text-base;
+  /* inner glow 👇 */
+  box-shadow:
+    inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
+    /* shadow ring 👇 */
+    0 0 0 1px hsla(0, 0%, 0%, 0.05),
+    /* multiple soft shadows 👇 */
+    0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+    0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+    0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+}
+
+main {
+  @apply mx-auto flex flex-col items-start justify-between pt-0 pb-0 sm:items-center;
+}
+
+footer {
+  @apply mx-auto mt-12 flex w-full max-w-3xl flex-col flex-wrap items-center justify-center gap-4 px-4;
+}
+
+h1 {
+  @apply py-3 text-3xl leading-tight sm:py-6 sm:text-6xl;
+  color: var(--color-soft-charcoal);
+}
+
+html.dark h1 {
+  color: var(--color-lavender-mist);
+}
+
+h2 {
+  @apply py-2 text-lg leading-snug sm:py-4 sm:text-3xl;
+  color: var(--color-calm-sage);
+}
+
+html.dark h2 {
+  color: var(--color-soft-rose);
+}
+
+p {
+  @apply mb-6;
+}
+
+img {
+  @apply h-auto max-w-full rounded-xl;
+}
+
+/* links */
+a.button-link:not(:disabled),
+button.button-link:not(:disabled) {
+  @apply inline-flex cursor-pointer items-center justify-center rounded-full border px-4 py-2 text-sm leading-tight transition sm:px-8 sm:text-base;
+  border-color: var(--color-ash-gray);
+}
+
+a.button-link:not(:disabled):hover,
+button.button-link:not(:disabled):hover {
+  border-color: var(--color-coral-pink);
+  color: var(--color-coral-pink);
+}
+
+html.dark a.button-link:not(:disabled):hover,
+html.dark button.button-link:not(:disabled):hover {
+  border-color: var(--color-peach);
+  color: var(--color-peach);
+}
+
+a.button-link.space-btn-filled:not(:disabled),
+button.button-link.space-btn-filled:not(:disabled) {
+  background-color: var(--color-jet);
+  color: whitesmoke;
+  border-color: var(--color-jet);
+}
+
+a.button-link.space-btn-filled:not(:disabled):hover,
+button.button-link.space-btn-filled:not(:disabled):hover {
+  background-color: var(--color-coral-pink);
+  border-color: var(--color-coral-pink);
+  color: white;
+}
+
+html.dark a.button-link.space-btn-filled:not(:disabled),
+html.dark button.button-link.space-btn-filled:not(:disabled) {
+  background-color: var(--color-sage);
+  color: var(--color-jet);
+  border-color: var(--color-sage);
+}
+
+html.dark a.button-link.space-btn-filled:not(:disabled):hover,
+html.dark button.button-link.space-btn-filled:not(:disabled):hover {
+  background-color: var(--color-peach);
+  border-color: var(--color-peach);
+  color: var(--color-jet);
+}
+
+a.button-link.space-btn-outlined:not(:disabled),
+button.button-link.space-btn-outlined:not(:disabled) {
+  background-color: transparent;
+  color: var(--color-jet);
+  border-color: var(--color-jet);
+}
+
+a.button-link.space-btn-outlined:not(:disabled):hover,
+button.button-link.space-btn-outlined:not(:disabled):hover {
+  border-color: var(--color-coral-pink);
+  color: var(--color-coral-pink);
+}
+
+html.dark a.button-link.space-btn-outlined:not(:disabled),
+html.dark button.button-link.space-btn-outlined:not(:disabled) {
+  background-color: transparent;
+  color: whitesmoke;
+  border-color: var(--color-ash-gray);
+}
+
+html.dark a.button-link.space-btn-outlined:not(:disabled):hover,
+html.dark button.button-link.space-btn-outlined:not(:disabled):hover {
+  border-color: var(--color-peach);
+  color: var(--color-peach);
+}
+
+html.dark a:not(.button-link) {
+  @apply text-whitesmoke;
+}
+
+html.light a:not(.button-link) {
+  color: var(--color-jet);
+}
+
+html.light a:not(.button-link):hover {
+  color: var(--color-coral-pink);
+}
+
+html.dark a:not(.button-link):hover {
+  color: var(--color-peach);
+}
+
+.page-content {
+  @apply my-8 w-full px-0 text-center sm:my-12 sm:px-4;
+}
+
+.blog-content img {
+  @apply my-8 mx-auto block w-full max-w-4xl shadow-md;
+}
+
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+}
+
+.blinking {
+  animation: cursor-blink 1.2s steps(2) infinite;
+}
+
+@media (orientation: portrait) {
+  .page-content {
+    text-align: left;
+  }
+}
+
+@media (max-width: 315px) {
+  section {
+    gap: 3rem;
+  }
+}
+
+/* Hide default audio tags in markdown content (using custom player instead) */
+.page-content audio {
+  display: none;
+}
+
+/* Ensure content doesn't get hidden behind the audio player */
+body {
+  padding-bottom: 90px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 640px) {
+  body {
+    padding-bottom: 120px;
+  }
+}
