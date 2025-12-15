@@ -55,7 +55,9 @@ export default defineConfig({
   ],
 
   image: {
-    responsiveStyles: true,
+    // Use passthrough service to skip remote image optimization during build
+    // This prevents fetch timeouts and speeds up builds significantly
+    service: { entrypoint: 'astro/assets/services/noop' },
     domains: ["pub-141831e61e69445289222976a15b6fb3.r2.dev"],
   },
 

@@ -16,6 +16,7 @@ import AudioPlayer from "../../components/AudioPlayer.astro";
 import siteConfig from "../../site.config";
 import TableOfContents from "../../components/TableOfContents.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import FAQ from "../../components/FAQ.astro";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blogs")).sort(sortItemsByDateDesc);
@@ -37,7 +38,7 @@ type Props = {
 };
 
 const { post, prevPost, nextPost } = Astro.props;
-const { title, pubDate, author, tags = [], image } = post.data;
+const { title, pubDate, author, tags = [], image, faq } = post.data;
 const { Content, headings } = await render(post, {
   // Disable automatic image optimization in markdown content
   // to prevent images from being converted to objects
@@ -101,9 +102,10 @@ const audioSrc = audioMatch ? audioMatch[1] : null;
               />
             ))
         }
-        <div class="font-light text-left px-4 blog-content">
+        <div class="font-light px-4 sm:px-0 blog-content">
           <Content />
         </div>
+        {faq && faq.length > 0 && <FAQ items={faq} />}
         <p
           class="kanit-regular text-center text-balance text-xs sm:text-sm px-4"
         >
